@@ -48,3 +48,11 @@ Phase0Tools.cs 提供 Editor 场景生成和 Development APK 构建方法。首�
 
 ## Git 与未保存状态
 本文件随交接提交保存。推送前检查远端，禁止强推或覆盖非空远端；上传结果以实际命令为准。Unity 未保存的改动不会进入 Git，用户需要自行保存。另一台电脑先读项目规则和本文件，执行四项 Git 检查再开发。
+
+## 本次 Git 实际结果
+- 已初始化 main 并完成基线提交：0a8468c（chore: establish Unity Phase 0 baseline and handoff）。
+- 推送前 git ls-remote 成功，未返回远端分支，仓库当时为空。
+- git push -u origin main 失败：GitHub 返回 Invalid username or token / Authentication failed，尚未上传。
+- 需要用户在本机完成 GitHub 认证，再执行 git push -u origin main；不要在聊天或仓库写入令牌。
+- 用户最新指示：仅完成本地提交，用户自行 push；Codex 不再尝试推送。
+- 此段随交接状态提交保存；最终本地 HEAD 用 git log -1 查询。提交前仅本文件有未提交记录，提交后状态以 git status -sb 为准。
