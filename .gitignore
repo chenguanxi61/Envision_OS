@@ -1,0 +1,20 @@
+**/[Ll]ibrary/
+**/[Tt]emp/
+**/[Oo]bj/
+**/[Ll]ogs/
+**/[Uu]serSettings/
+**/[Bb]uilds/
+**/[Bb]uild/
+**/.vs/
+**/.idea/
+*.csproj
+*.sln
+*.apk
+*.aab
+*.keystore
+*.jks
+.env
+.env.*
+# Editor-generated native helper libraries at the project root
+/UnityProject/Envision OS/jzmq.dll
+/UnityProject/Envision OS/libzmq-mt-4_3_6.dll
