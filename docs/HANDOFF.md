@@ -1,58 +1,31 @@
 # Envision OS — 最近一次开发交接
 
-- 日期：2026-10-13（Asia/Hong_Kong）
-- 开发地点：家里（用户确认）。
-- 工程：UnityProject/Envision OS；Unity 2022.3.62f3c1。
-- Git：开始时根目录不是 Git 仓库；用户本次已授权提交和上传。
-- 分支：本次拟初始化 main。当前交接提交 SHA 请用 git log -1 查询，文档不自引用提交 SHA。
-- 远端：用户指定 https://github.com/chenguanxi61/Envision_OS.git 。上传结果以实际 push 输出为准。
+- 日期：2026-10-13（Asia/Shanghai）
+- 开发地点：公司
+- 分支与基点：`main`，`4715af6`（修复一下bug）；开始时 `main` 与 `origin/main` 一致，工作区干净。
+- 仓库：`https://github.com/chenguanxi61/Envision_OS.git`
+- 本次范围：更新交接与开发文档；**未创建、构建或测试 Unity 工程**。
 
-## 当前进度
-Phase 0 进行中，尚未验收。Phase 1–4 均未开始，不开发倒车影像、3D 车辆、默认 HOME 或 Compose 主界面。
+## 当前事实
 
-已有 Unity 空模板工程，保留 SampleScene。DashboardController.cs 原型在运行时创建 UGUI/TMP 首页、静态高德卡片、标注 Mock 的音乐、设置面板和演示提示；没有 Android JNI 或真实系统功能。
+最近两次已推送提交 `5dd3a35`、`4715af6` 先替换、后移除了 Unity 工程。当前仓库没有 `UnityProject/`。旧的 `UnityProject/Envision OS`、原型脚本、字体和 `SampleScene` 不再位于工作树；它们仍可从早期 Git 历史查阅，但不得误认为当前工程文件。
 
-Phase0Tools.cs 提供 Editor 场景生成和 Development APK 构建方法。首次生成因 TMP shader 缺失出现 ArgumentNullException；已修正导入流程并实际导入 TMP 基础资源。修正后未重试生成 Launcher，未执行 APK 构建。
+公司电脑使用 Unity 2022.3.62f3 新建工程时，`Packages/manifest.json`、`packages-lock.json` 与全部检查到的 `ProjectSettings` 文件以相同异常字节开头，Unity 报 manifest 无效；此前旧工程的 Bee 构建缓存也无法解析。Unity 安装目录中的模板 manifest 可正常读取。绿盾透明加密或授权策略可能影响工程文件读取，尚未经 IT 确认。重新创建和清理 `Library` 未得到可用工程；公司电脑当前不承担后续开发。
 
-已加入 NotoSansCJKsc-Regular.otf 和 OFL 许可证。用户已创建 NotoSansCJKsc-Regular SDF.asset，磁盘检查为 Dynamic。SampleScene 已挂原型脚本，保留用户保存的场景原样。
+## 已确认的开发选择
 
-## 用户最新偏好（下一台电脑必须遵守）
-用户有开发经验，明确要求不要用脚本生成 UI，由用户在 Unity Editor 手工创建层级和控件。后续脚本只负责交互、状态更新和 Inspector 引用绑定。
+- 回家后使用 **Unity 2022.3.62f3 国际版**重新创建工程，不复制公司电脑生成的异常文件。
+- 保持 Unity + C# 主应用、uGUI + TextMeshPro 和 Android 最小公开 API 桥接。
+- 用户在 Editor 手工搭 UI；后续脚本仅绑定控件并处理交互。Phase 0 完成前不进入高德或 MediaSession 实现。
 
-原型脚本和场景生成工具保留作为已有工作，不继续运行生成工具或扩展生成 UI。手工创建前退出 Play Mode，禁用旧 DashboardController，防止重复 Canvas。不要覆盖用户场景或字体。用户通过 Escape 停止过 computer-use；不要默认接管 Editor。
+## 回家后的下一步（仅 Phase 0）
 
-## 实际环境与验证
-- Unity：2022.3.62f3c1；已打开工程，原型脚本导入后出现菜单，没有观察到 C# 编译错误。这不是完整构建通过证据。
-- AndroidPlayer 模块存在；SDK platforms 33/34/35 存在。
-- NDK source.properties：23.1.7779620。
-- 实际执行内置 java -version：OpenJDK 11.0.14.1。
-- 实际执行 adb devices：列表为空，没有连接设备。
-- 用户 Play Mode 截图显示原型首页，但中文方框，字体指定 LiberationSans SDF - Fallback；中文修复尚未重新验证，按钮未验收。
-- 磁盘只有 SampleScene，尚无 Launcher.unity 或 APK。
-- 高德启动、MediaSession、蓝牙、模拟器、实车均未实现或未测试。
+1. 执行 `git status -sb`、`git branch -vv`、`git remote -v`、`git log -5 --oneline`；工作区干净时再拉取最新 `main`。
+2. 在仓库 `UnityProject/` 创建轻量 Unity 工程；确认 `Packages/manifest.json` 是有效 JSON、Editor 导入和脚本编译正常，`GameObject → UI → Canvas` 可用。
+3. 按 `docs/UI_SETUP.md` 手工建立 `Launcher`，先验证中文字体、16:9 与 16:10 布局，再编写引用绑定与 Mock 交互脚本。
+4. 检查家里的 Android Build Support、SDK/NDK/JDK 与 ADB；具备条件后尝试 Development APK，记录真实结果。没有设备时安装与实机验证继续标为未测试。
+5. 更新 `README.md`、`docs/DEVELOPMENT.md`、`docs/HANDOFF.md` 和 `docs/TESTING.md`；Phase 0 验收后汇报，再决定 Phase 1。
 
-## 文件交接
-- Assets/Scripts/UI/DashboardController.cs 及 meta：运行时 UI 原型，后续改为手工 UI 引用绑定。
-- Assets/Editor/Phase0Tools.cs 及 meta：原型生成和构建工具。
-- Assets/Art/Fonts/：Noto OTF、OFL、用户生成的 SDF 及 meta。
-- Assets/TextMesh Pro/：Unity 导入的基础资源。
-- Assets/Scenes/SampleScene.unity：用户当前场景，保留原样。
-- README.md、.gitignore、docs/UI_SETUP.md、DEVELOPMENT.md、TESTING.md、ANDROID_SETUP.md、HANDOFF.md。
+## 文件变更与验证
 
-## 下一步（仅 Phase 0）
-1. 按 UI_SETUP.md 手工创建 Launcher，并保存卡片 Prefab。
-2. TMP 指定 Noto 中文 SDF；验证中文、16:9 与 16:10 布局。
-3. 根据真实层级改写交互脚本，通过序列化引用绑定，测试 Mock 按钮和设置面板。
-4. 将手工 Launcher 加入 Build Settings，尝试 Development APK，保存真实 BuildReport、路径、安装启动结果。
-5. Phase 0 验收后汇报，等待用户确认再进入 Phase 1。
-
-## Git 与未保存状态
-本文件随交接提交保存。推送前检查远端，禁止强推或覆盖非空远端；上传结果以实际命令为准。Unity 未保存的改动不会进入 Git，用户需要自行保存。另一台电脑先读项目规则和本文件，执行四项 Git 检查再开发。
-
-## 本次 Git 实际结果
-- 已初始化 main 并完成基线提交：0a8468c（chore: establish Unity Phase 0 baseline and handoff）。
-- 推送前 git ls-remote 成功，未返回远端分支，仓库当时为空。
-- git push -u origin main 失败：GitHub 返回 Invalid username or token / Authentication failed，尚未上传。
-- 需要用户在本机完成 GitHub 认证，再执行 git push -u origin main；不要在聊天或仓库写入令牌。
-- 用户最新指示：仅完成本地提交，用户自行 push；Codex 不再尝试推送。
-- 此段随交接状态提交保存；最终本地 HEAD 用 git log -1 查询。提交前仅本文件有未提交记录，提交后状态以 git status -sb 为准。
+本次只改 `README.md`、`docs/DEVELOPMENT.md`、`docs/HANDOFF.md`、`docs/TESTING.md`、`docs/ANDROID_SETUP.md`、`docs/UI_SETUP.md`。未运行 Unity Editor、APK 构建、模拟器或设备测试。提交及推送由用户自行执行；最终未提交状态以提交前的 `git status -sb` 为准。

@@ -1,9 +1,9 @@
 # Phase 0 — 手工 UI 搭建
 
-退出 Play Mode，禁用旧 DashboardController。用户在 Editor 创建 UI；后续脚本仅做交互和 Inspector 引用绑定。
+在新工程中退出 Play Mode 后手工创建 `Launcher` 场景。当前仓库没有旧 `DashboardController` 脚本；后续脚本仅做交互和 Inspector 引用绑定。
 
 ## 字体
-使用 Assets/Art/Fonts/NotoSansCJKsc-Regular.otf 创建 TMP Font Asset。已有用户生成的同名 SDF，检查 Dynamic、Multi Atlas Textures 和源 OTF 引用。每个 TextMeshProUGUI 指定此资产，先测试“高德地图 / 音乐 / 设置”。保留 OTF，不使用 LiberationSans 显示中文。
+新工程中的中文字体尚未准备。选用具有合法许可的中文字体，保留许可证和源字体文件，在 Editor 中创建 TMP Font Asset，并检查 Dynamic、Multi Atlas Textures 和源字体引用。每个中文 TextMeshProUGUI 指定该资产，先测试“高德地图 / 音乐 / 设置”；不要依赖 LiberationSans 显示中文。
 
 ## 层级（TMP 指 TextMeshProUGUI）
 ```text
@@ -31,7 +31,7 @@ Launcher
 │        └─ SettingsPanel (Image)
 │           ├─ TitleText / VersionText / TestStatusText (TMP)
 │           └─ BluetoothButton / NotificationButton / CloseButton (Image + Button + 子 TMP)
-└─ DashboardController (后续交互脚本，不挂旧 UI 生成脚本)
+└─ LauncherController (空物体，供后续交互脚本挂载；当前脚本尚未创建)
 ```
 
 ## 建议参数
